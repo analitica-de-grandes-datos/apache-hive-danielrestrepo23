@@ -23,7 +23,6 @@ LOAD DATA LOCAL INPATH "data.tsv" OVERWRITE INTO TABLE data;
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
  
-
 SELECT letter, dates, number FROM data
-ORDER BY letter, number;
+ORDER BY letter, number, dates;
 
