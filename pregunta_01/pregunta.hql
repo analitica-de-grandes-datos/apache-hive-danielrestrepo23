@@ -14,14 +14,17 @@ Escriba el resultado a la carpeta `output` de directorio de trabajo.
         >>> Escriba su respuesta a partir de este punto <<<
 */
 DROP TABLE IF EXISTS data;
-CREATE TABLE data (line STRING);
-LOAD DATA LOCAL INPATH "pregunta_01/Source/" OVERWRITE INTO TABLE data;
+CREATE TABLE data (letter        STRING,
+                   dates         DATE,
+                   number        INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH "data.tsv" OVERWRITE INTO TABLE data;
 
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT letter, count(letter) AS value
-    FROM
-        (SELECT split(line, '\\s')[0] AS letter FROM data) C1
+
+SELECT letter, count(letter) AS cantidad
+    FROM data
 GROUP BY
     letter
 ORDER BY
