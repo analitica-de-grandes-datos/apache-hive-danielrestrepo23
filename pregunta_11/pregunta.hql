@@ -44,4 +44,4 @@ LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 
-Select CONCAT('"',c1,',',size(c2),',',size(map_keys(c3)),'",') from t0;
+Select c1,size(c2),size(map_keys(c3)) from t0;
