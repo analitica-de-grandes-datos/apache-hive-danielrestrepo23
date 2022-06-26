@@ -30,4 +30,14 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT b.letra1,b.letra,COUNT(b.letra) from (SELECT letra1, R.letra from (SELECT P.c2 ,letra FROM t0 P LATERAL VIEW EXPLODE(map_keys(P.c3)) fv as letra) R LATERAL VIEW EXPLODE(R.c2) fv as letra1) b GROUP BY b.letra1,b.letra; 
+SELECT 
+    letter, 
+    letters,
+    count(letters) AS conteo
+FROM t0
+LATERAL VIEW
+    EXPLODE(c2) t0 AS letter
+LATERAL VIEW
+    EXPLODE(c3) t0 AS letters, numbers
+GROUP BY letter, letters;
+
