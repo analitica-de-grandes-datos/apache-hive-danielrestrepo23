@@ -64,4 +64,4 @@ LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 
-SELECT c2,CONCAT_WS(':',a.lista) from (SELECT c2, collect_set(CAST(c1 AS string)) as lista FROM tbl0 group by c2) a;
+SELECT c2,CONCAT_WS(':',a.lista) from (SELECT c2, collect_list(CAST(c1 AS string)) as lista FROM tbl0 group by c2) a;
