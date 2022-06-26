@@ -28,8 +28,13 @@ CREATE TABLE t0 (
         LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
+/*
+    >>> Escriba su respuesta a partir de este punto <<<
+*/
+
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+
 SELECT 
     letter, 
     letters,
@@ -40,4 +45,3 @@ LATERAL VIEW
 LATERAL VIEW
     EXPLODE(c3) t0 AS letters, numbers
 GROUP BY letter, letters;
-
