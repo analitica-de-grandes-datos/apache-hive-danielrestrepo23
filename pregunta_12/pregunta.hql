@@ -26,12 +26,8 @@ CREATE TABLE t0 (
         COLLECTION ITEMS TERMINATED BY ','
         MAP KEYS TERMINATED BY '#'
         LINES TERMINATED BY '\n';
-LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE tbl0;
+LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-
-SELECT b.letra1,b.letra,COUNT(b.letra) from (
-SELECT letra1, R.letra from (
-SELECT P.c2 ,letra FROM t0 P LATERAL VIEW EXPLODE(map_keys(P.c3)) fv as letra) R
-LATERAL VIEW EXPLODE(R.c2) fv as letra1) b GROUP BY b.letra1,b.letra; 
+SELECT b.letra1,b.letra,COUNT(b.letra) from (SELECT letra1, R.letra from (SELECT P.c2 ,letra FROM t0 P LATERAL VIEW EXPLODE(map_keys(P.c3)) fv as letra) R LATERAL VIEW EXPLODE(R.c2) fv as letra1) b GROUP BY b.letra1,b.letra; 
