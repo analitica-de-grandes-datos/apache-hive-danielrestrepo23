@@ -65,6 +65,6 @@ LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 
-Select CONCAT('"',a.c2,',', CAST(sum(a.suma)as string),'",') from (
+Select a.c2,CAST(sum(a.suma)as string) from (
 Select c2, COALESCE (tbl0.c6["aa"], CAST(0 AS BIGINT))+ COALESCE (tbl0.c6["bb"], CAST(0 AS BIGINT)) + COALESCE (tbl0.c6["cc"], CAST(0 AS BIGINT)) + COALESCE (tbl0.c6["dd"], CAST(0 AS BIGINT)) AS suma FROM tbl0) a 
 GROUP BY a.c2;
